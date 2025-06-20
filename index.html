@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSB Pay - Giải pháp thanh toán chuyên nghiệp</title>
+	
+    <style>
+
+		* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--msb-orange);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            border-color: #fff;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .section:nth-child(odd) {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 2px;
+        }
+
+        .emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #ff6b35;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+            opacity: 0.1;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255,107,53,0.2);
+        }
+
+        .benefit-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .benefit-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Features List */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 35px rgba(255,107,53,0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .feature-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .step-description {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.1);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,107,53,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-card:hover {
+            background: rgba(255,107,53,0.1);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff6b35;
+        }
+
+        .contact-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .contact-info a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .header {
+                padding: 60px 0;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .benefits-grid,
+            .features-list,
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.8s ease-out;
+        }
+		/* ---------- Root & Reset ---------- */
+    :root{
+      --primary:#E30613;
+      --accent:#FF6B00;
+      --dark:#1a1a1a;
+      --light:#ffffff;
+      --gray:#f4f4f4;
+      --radius:14px;
+      --max-width:1200px;
+    }
+    
+    </style>
+</head>
+<body>
+
+	<!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="LogoMSB1.png" alt="MSB Logo" class="h-12">
+                <p class="tagline">Giải pháp thanh toán chuyên nghiệp - Tích hợp đa kênh, An toàn tuyệt đối</p>
+                <a href="#contact" class="cta-button">Đăng ký ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Benefits Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <div class="emoji">🚀</div>
+                Lợi ích nổi bật MSB Pay
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">9K+</div>
+                    <div class="stat-label">Doanh nghiệp tin dùng</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Trường học</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Bệnh viện</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">400K+</div>
+                    <div class="stat-label">Giao dịch/tháng</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">800 tỷ</div>
+                    <div class="stat-label">Đồng/tháng</div>
+                </div>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3 class="benefit-title">🔗 Tích hợp đa kênh - Open Banking</h3>
+                    <p class="benefit-description">Kết nối dễ dàng với hệ thống bệnh viện, trường học, sàn TMĐT, website, POS, app. Hỗ trợ thu hộ, chi hộ lượng lớn giao dịch hàng tháng một cách hiệu quả.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3 class="benefit-title">📈 Dùng rộng rãi & tối ưu vận hành</h3>
+                    <p class="benefit-description">Được tin dùng bởi hàng ngàn doanh nghiệp, trường học và bệnh viện. Xử lý hơn 400.000 giao dịch với giá trị ~800 tỷ đồng mỗi tháng.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3 class="benefit-title">⚡ Thanh toán nhanh, ổn định cao</h3>
+                    <p class="benefit-description">Tự động gửi thông báo sau giao dịch, truy vấn theo thời gian thực qua tài khoản ảo, API, webhook cho trải nghiệm người dùng tối ưu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <div class="emoji">🛠</div>
+                Đặc điểm sản phẩm
+            </div>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-content">
+                        <h3>Giải pháp thực hiện đa kênh</h3>
+                        <p>Hỗ trợ đầy đủ các kênh thanh toán: website, app, Merchant App, QR, API Banking, tài khoản ảo theo đơn hàng.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔌</div>
+                    <div class="feature-content">
+                        <h3>API & webhook phong phú</h3>
+                        <p>Cho phép nhận thông tin biến động, tích hợp tự động báo cáo, quản lý dòng tiền chính xác và kịp thời.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏗️</div>
+                    <div class="feature-content">
+                        <h3>Hệ sinh thái tích hợp sâu</h3>
+                        <p>Đồng bộ với MSB Pay, M Virtual Account, M SCF, M Flash... giúp doanh nghiệp dễ dàng giao dịch & cấp tín dụng số hóa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <div class="emoji">📝</div>
+                Điều kiện & hồ sơ đăng ký
+            </div>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🏢</div>
+                    <div class="feature-content">
+                        <h3>Đối tượng áp dụng</h3>
+                        <p>Doanh nghiệp, trường học, bệnh viện, hộ kinh doanh có nhu cầu tích hợp thanh toán, thu/chi tự động.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-content">
+                        <h3>Hồ sơ cần thiết</h3>
+                        <p>Giấy ĐKKD, đăng ký mã số thuế, CMND/CCCD người đại diện. Tùy theo mô hình có thể cần: hợp đồng, đơn hàng mẫu, yêu cầu kỹ thuật hệ thống.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <div class="emoji">🔄</div>
+                Quy trình triển khai MSB Pay
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Liên hệ & trao đổi</h3>
+                    <p class="step-description">Liên hệ & trao đổi nhu cầu qua hotline hoặc website</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Chuẩn bị hồ sơ</h3>
+                    <p class="step-description">Chuẩn bị hồ sơ – tích hợp kỹ thuật: MSB chuyển tài liệu, API, hướng dẫn code</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Ký kết & cấu hình</h3>
+                    <p class="step-description">Ký kết & cấu hình hệ thống (API + webhook + tài khoản ảo/mã QR)</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Chạy thử nghiệm</h3>
+                    <p class="step-description">Chạy thử nghiệm – kiểm tra chuyển khoản test, xác nhận nhận tiền</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Triển khai chính thức</h3>
+                    <p class="step-description">Chính thức triển khai và bắt đầu thu/chi tự động</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Hỗ trợ 24/7</h3>
+                    <p class="step-description">Theo dõi & hỗ trợ kỹ thuật 24/7 – cập nhật báo cáo giao dịch theo thời gian thực</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-title" style="color: white;">
+                <div class="emoji">📞</div>
+                Thông tin liên hệ
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3 class="contact-title">Hotline doanh nghiệp</h3>
+                    <div class="contact-info">
+                        <strong>1800 6260</strong><br>
+                        Hỗ trợ 24/7
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3 class="contact-title">Email hỗ trợ</h3>
+                    <div class="contact-info">
+                        <a href="mailto:CSKHDoanhNghiep@msb.com.vn">CSKHDoanhNghiep@msb.com.vn</a>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🌐</div>
+                    <h3 class="contact-title">Website tư vấn</h3>
+                    <div class="contact-info">
+                        Truy cập website MSB<br>
+                        Mục "Giải pháp – MSB Pay"
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🤝</div>
+                    <h3 class="contact-title">Fintech Partner</h3>
+                    <div class="contact-info">
+                        Kết nối qua SePay để triển khai nhanh & tiết kiệm<br>
+                        Hỗ trợ tích hợp VA, API MSB Pay
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🏢</div>
+                    <h3 class="contact-title">Chi nhánh</h3>
+                    <div class="contact-info">
+                        <strong>260+</strong> điểm phục vụ<br>
+                        Trên toàn quốc
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-on-scroll');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.benefit-card, .feature-item, .step, .contact-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
